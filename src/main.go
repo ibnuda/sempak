@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/ibnuda/sempak/src/handlers"
 )
 
 func main() {
@@ -14,6 +15,7 @@ func main() {
 	flag.StringVar(&dir, "dir", "static", "default thingy.")
 	flag.Parse()
 	r := mux.NewRouter()
+	r.HandleFunc("/sempak/{ukuran:[0-9]+}", handlers.EmbuhHandler)
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(dir))))
 	srv := &http.Server{
 		Handler:      r,
